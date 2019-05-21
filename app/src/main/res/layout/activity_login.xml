@@ -11,6 +11,152 @@
         android:orientation="vertical"
         >
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <LinearLayout
+                android:background="@drawable/login_background_gradiant"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="30dp"
+                android:padding="20dp"
+                >
+
+                <ImageView
+                    android:layout_marginTop="20dp"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:src="@drawable/logoimg"
+                    android:id="@+id/loginImg"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Sign In"
+                    android:textColor="#ffffff"
+                    android:textSize="30sp"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:layout_marginBottom="60dp"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="300dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:padding="30dp"
+                android:background="@drawable/white_round"
+
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Name of E-mail"
+                    />
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="E-mail 주소를 입력하세요."
+                        android:id="@+id/userIdEdt"
+                        android:inputType="textEmailAddress"
+                        />
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@mipmap/ic_launcher"
+                        android:layout_gravity="right"
+                        />
+                </FrameLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Password"
+                    />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Password를 입력하세요."
+                        android:id="@+id/passwordEdt"
+                        android:inputType="textPassword"
+                        />
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@mipmap/ic_launcher"
+                        android:layout_gravity="right"
+                        />
+                </FrameLayout>
+
+
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <CheckBox
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/autoCheckBox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="자동 로그인"
+                        android:textSize="17sp"
+                        />
+
+                </LinearLayout>
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Sign In"
+                    android:textColor="#ffffff"
+                    android:background="@drawable/btn_gradiant_round"
+                    android:layout_marginTop="30dp"
+                    android:id="@+id/loginBtn"
+                    />
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+
+        
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Don't have an account? Creat Now"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:textSize="17sp"
+            />
 
     </LinearLayout>
 
