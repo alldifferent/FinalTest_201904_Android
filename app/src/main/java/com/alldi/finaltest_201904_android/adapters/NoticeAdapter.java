@@ -42,6 +42,8 @@ public class NoticeAdapter extends ArrayAdapter<Notice> {
         TextView titleTxt = row.findViewById(R.id.titleTxt);
         TextView dataTxt = row.findViewById(R.id.dataTxt);
 
+        titleTxt.setText(noticeData.title);
+        dataTxt.setText(noticeData.created_at);
 
 
         return row;

@@ -1,6 +1,7 @@
 package com.alldi.finaltest_201904_android;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -9,18 +10,25 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alldi.finaltest_201904_android.adapters.NoticeAdapter;
 import com.alldi.finaltest_201904_android.adapters.ViewPagerAdapter;
 import com.alldi.finaltest_201904_android.databinding.ActivityMainBinding;
+import com.alldi.finaltest_201904_android.datas.Notice;
 import com.alldi.finaltest_201904_android.fragments.InfoFragment;
 import com.alldi.finaltest_201904_android.utils.ConnectServer;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 public class MainActivity extends BaseActivity {
 
     ActivityMainBinding act;
     ViewPagerAdapter viewPagerAdapter;
+    NoticeAdapter noticeAdapter;
+    List<Notice> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,19 +119,7 @@ public class MainActivity extends BaseActivity {
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), act.tabLayout.getTabCount());
         act.viewPager.setAdapter(viewPagerAdapter);
 
-        ConnectServer.getRequestNotice(mContect, userToken, new ConnectServer.JsonHandler() {
-            @Override
-            public void onResponse(JSONObject json) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
 
-                        Toast.makeText(mContect, "공지게시판 접속 성공", Toast.LENGTH_SHORT).show();
-
-                    }
-                });
-            }
-        });
 
     }
 
@@ -134,7 +130,51 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    public void setListViewOnFragment(){
 
+    public void setListViewOnFragment(List<Notice> list, NoticeAdapter noticeAdapter){
+
+        String userToken = getIntent().getStringExtra("token");
+
+        ConnectServer.getRequestNotice(mContect, userToken, new ConnectServer.JsonHandler() {
+            @Override
+            public void onResponse(JSONObject json) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        try {
+                            int code = json.getInt("code");
+                            if (code == 200){
+
+                                JSONObject data = json.getJSONObject("data");
+                                JSONArray announcements = data.getJSONArray("announcements");
+
+                                list.clear();
+
+                                for (int i = 0; i < announcements.length(); i++){
+
+                                    JSONObject jsonNotice = announcements.getJSONObject(i);
+                                    Notice noticeData = Notice.getNoticeData(jsonNotice);
+
+                                    list.add(noticeData);
+
+                                }
+
+                                noticeAdapter.notifyDataSetChanged();
+
+
+                            }else {
+                                String message = json.getString("message");
+                                Toast.makeText(mContect, message, Toast.LENGTH_SHORT).show();
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
+            }
+        });
     }
 }

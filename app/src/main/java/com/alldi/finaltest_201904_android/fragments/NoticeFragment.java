@@ -1,5 +1,6 @@
 package com.alldi.finaltest_201904_android.fragments;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -7,8 +8,12 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Toast;
 
 import com.alldi.finaltest_201904_android.BaseFragment;
+import com.alldi.finaltest_201904_android.MainActivity;
+import com.alldi.finaltest_201904_android.NoticeActivity;
 import com.alldi.finaltest_201904_android.R;
 import com.alldi.finaltest_201904_android.adapters.NoticeAdapter;
 import com.alldi.finaltest_201904_android.databinding.FragmentInfoListBinding;
@@ -45,17 +50,41 @@ public class NoticeFragment extends BaseFragment {
     @Override
     public void setupEvents() {
 
+        binding.noticeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Notice noticeData = noticeList.get(position);
+
+
+                Intent intent = new Intent(getActivity(), NoticeActivity.class);
+                intent.putExtra("noticeInfo", noticeData);
+                startActivity(intent);
+
+            }
+        });
+
+
     }
 
     @Override
     public void setValues() {
 
-
+        noticeAdapter = new NoticeAdapter(getActivity(), noticeList);
+        binding.noticeListView.setAdapter(noticeAdapter);
 
     }
 
     @Override
     public void bindViews() {
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        ((MainActivity) getActivity()).setListViewOnFragment(noticeList, noticeAdapter);
 
     }
 }
