@@ -9,6 +9,7 @@
         android:layout_height="match_parent"
         tools:context=".NoticeActivity"
         android:orientation="vertical"
+
         >
 
         <LinearLayout
@@ -16,7 +17,9 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="15dp"
+            android:layout_margin="5dp"
             android:gravity="center"
+            android:background="@drawable/notice_title_background"
             >
 
             <TextView
@@ -48,6 +51,8 @@
             android:padding="10dp"
             android:orientation="vertical"
             android:paddingBottom="30dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/notice_content_background"
             >
 
             <TextView
