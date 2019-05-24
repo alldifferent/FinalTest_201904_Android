@@ -14,8 +14,6 @@ import java.util.List;
 public class NoticeActivity extends BaseActivity {
 
     ActivityNoticeBinding act;
-    List<Notice> noticeList = new ArrayList<>();
-    NoticeAdapter noticeAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
