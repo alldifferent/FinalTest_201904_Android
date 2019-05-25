@@ -3,7 +3,11 @@ package com.alldi.finaltest_201904_android;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.alldi.finaltest_201904_android.databinding.ActivityLoginBinding;
@@ -13,9 +17,12 @@ import com.alldi.finaltest_201904_android.utils.ContentUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.zip.Inflater;
+
 public class LoginActivity extends BaseActivity {
 
     ActivityLoginBinding act;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +61,9 @@ public class LoginActivity extends BaseActivity {
                                         JSONObject data = json.getJSONObject("data");
                                         String token = data.getString("token");
 
-
-                                        ContentUtil.setUserToken(mContect, token);
-
+                                        if (act.autoCheckBox.isChecked()){
+                                            ContentUtil.setUserToken(mContect, token);
+                                        }
 
                                         Intent intent = new Intent(mContect, MainActivity.class);
                                         intent.putExtra("token", token);
@@ -92,21 +99,13 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void setValues() {
 
-
-
-        String saveToken = ContentUtil.getUserToken(mContect);
-//        if (saveToken != null){
-//            Intent intent = new Intent(mContect, MainActivity.class);
-//            intent.putExtra("token", saveToken);
-//            startActivity(intent);
-//            finish();
-//        }
-
     }
 
     @Override
     public void bindViews() {
 
-        act = DataBindingUtil.setContentView(this, R.layout.activity_login);
+        act = DataBindingUtil.setContentView(LoginActivity.this, R.layout.activity_login);
+
     }
+
 }

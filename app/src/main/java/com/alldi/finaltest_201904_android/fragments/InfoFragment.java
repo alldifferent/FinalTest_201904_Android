@@ -1,5 +1,6 @@
 package com.alldi.finaltest_201904_android.fragments;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,8 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.alldi.finaltest_201904_android.BaseFragment;
+import com.alldi.finaltest_201904_android.LoginActivity;
+import com.alldi.finaltest_201904_android.MainActivity;
 import com.alldi.finaltest_201904_android.R;
 import com.alldi.finaltest_201904_android.databinding.FragmentInfoListBinding;
+import com.alldi.finaltest_201904_android.utils.ContentUtil;
 import com.bumptech.glide.Glide;
 
 public class InfoFragment extends BaseFragment {
@@ -72,5 +76,19 @@ public class InfoFragment extends BaseFragment {
 
         Glide.with(getActivity()).load(userUrl).into(binding.userImg);
 
+    }
+
+    public void setLogout(){
+        binding.logoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ContentUtil.setUserToken(getActivity(), "");
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+
+            }
+        });
     }
 }

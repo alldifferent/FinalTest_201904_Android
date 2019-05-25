@@ -66,6 +66,15 @@
             android:id="@+id/emailTxt"
             />
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="100dp"
+            android:id="@+id/logoutBtn"
+            android:text="로그아웃"
+            />
+
     </LinearLayout>
 
 </layout>

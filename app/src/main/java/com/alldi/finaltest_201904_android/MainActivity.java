@@ -7,6 +7,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +17,7 @@ import com.alldi.finaltest_201904_android.databinding.ActivityMainBinding;
 import com.alldi.finaltest_201904_android.datas.Notice;
 import com.alldi.finaltest_201904_android.fragments.InfoFragment;
 import com.alldi.finaltest_201904_android.utils.ConnectServer;
+import com.alldi.finaltest_201904_android.utils.ContentUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -70,51 +72,103 @@ public class MainActivity extends BaseActivity {
         act.tabLayout.addTab(act.tabLayout.newTab().setText("공지사항"));
 
 
+        if (ContentUtil.getUserToken(mContect).length() == 0){
 
-        String userToken = getIntent().getStringExtra("token");
+            String userToken = getIntent().getStringExtra("token");
 
-        ConnectServer.getRequestInfo(mContect, userToken, new ConnectServer.JsonHandler() {
-            @Override
-            public void onResponse(JSONObject json) {
+            ConnectServer.getRequestInfo(mContect, userToken, new ConnectServer.JsonHandler() {
+                @Override
+                public void onResponse(JSONObject json) {
 
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
 
-                        try {
-                            int code = json.getInt("code");
+                            try {
+                                int code = json.getInt("code");
 
-                            if(code == 200){
+                                if(code == 200){
 
-                                JSONObject data = json.getJSONObject("data");
-                                JSONObject user = data.getJSONObject("user");
+                                    JSONObject data = json.getJSONObject("data");
+                                    JSONObject user = data.getJSONObject("user");
 
-                                String name = user.getString("name");
-                                String email = user.getString("email");
-                                String billing_account = user.getString("billing_account");
-                                String profile_image = user.getString("profile_image");
+                                    String name = user.getString("name");
+                                    String email = user.getString("email");
+                                    String billing_account = user.getString("billing_account");
+                                    String profile_image = user.getString("profile_image");
 
-                                Fragment currentFrag = viewPagerAdapter.getItem(act.viewPager.getCurrentItem());
-                                ((InfoFragment) currentFrag).setaccoutText(billing_account);
-                                ((InfoFragment) currentFrag).setEmailText(email);
-                                ((InfoFragment) currentFrag).setNameText(name);
-                                ((InfoFragment) currentFrag).setImgChange(profile_image);
+                                    Fragment currentFrag = viewPagerAdapter.getItem(act.viewPager.getCurrentItem());
+                                    ((InfoFragment) currentFrag).setaccoutText(billing_account);
+                                    ((InfoFragment) currentFrag).setEmailText(email);
+                                    ((InfoFragment) currentFrag).setNameText(name);
+                                    ((InfoFragment) currentFrag).setImgChange(profile_image);
+                                    ((InfoFragment) currentFrag).setLogout();
 
 
-                            }else {
-                                String message = json.getString("message");
-                                Toast.makeText(mContect, message, Toast.LENGTH_SHORT).show();
+                                }else {
+                                    String message = json.getString("message");
+                                    Toast.makeText(mContect, message, Toast.LENGTH_SHORT).show();
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
+                    });
 
-                    }
-                });
+                }
+            });
 
-            }
-        });
+        }else {
+
+            String userToken = getIntent().getStringExtra("token");
+
+            ConnectServer.getRequestInfo(mContect, userToken, new ConnectServer.JsonHandler() {
+                @Override
+                public void onResponse(JSONObject json) {
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            try {
+                                int code = json.getInt("code");
+
+                                if(code == 200){
+
+                                    JSONObject data = json.getJSONObject("data");
+                                    JSONObject user = data.getJSONObject("user");
+
+                                    String name = user.getString("name");
+                                    String email = user.getString("email");
+                                    String billing_account = user.getString("billing_account");
+                                    String profile_image = user.getString("profile_image");
+
+                                    Fragment currentFrag = viewPagerAdapter.getItem(act.viewPager.getCurrentItem());
+                                    ((InfoFragment) currentFrag).setaccoutText(billing_account);
+                                    ((InfoFragment) currentFrag).setEmailText(email);
+                                    ((InfoFragment) currentFrag).setNameText(name);
+                                    ((InfoFragment) currentFrag).setImgChange(profile_image);
+                                    ((InfoFragment) currentFrag).setLogout();
+
+
+
+                                }else {
+                                    String message = json.getString("message");
+                                    Toast.makeText(mContect, message, Toast.LENGTH_SHORT).show();
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    });
+
+                }
+            });
+        }
 
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), act.tabLayout.getTabCount());
         act.viewPager.setAdapter(viewPagerAdapter);
@@ -130,51 +184,103 @@ public class MainActivity extends BaseActivity {
 
     }
 
+    public void activityFinish(){
+        finish();
+    }
+
 
     public void setListViewOnFragment(List<Notice> list, NoticeAdapter noticeAdapter){
 
-        String userToken = getIntent().getStringExtra("token");
+        if (ContentUtil.getUserToken(mContect).length() == 0) {
+            String userToken = getIntent().getStringExtra("token");
 
-        ConnectServer.getRequestNotice(mContect, userToken, new ConnectServer.JsonHandler() {
-            @Override
-            public void onResponse(JSONObject json) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
+            ConnectServer.getRequestNotice(mContect, userToken, new ConnectServer.JsonHandler() {
+                @Override
+                public void onResponse(JSONObject json) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
 
-                        try {
-                            int code = json.getInt("code");
-                            if (code == 200){
+                            try {
+                                int code = json.getInt("code");
+                                if (code == 200){
 
-                                JSONObject data = json.getJSONObject("data");
-                                JSONArray announcements = data.getJSONArray("announcements");
+                                    JSONObject data = json.getJSONObject("data");
+                                    JSONArray announcements = data.getJSONArray("announcements");
 
-                                list.clear();
+                                    list.clear();
 
-                                for (int i = 0; i < announcements.length(); i++){
+                                    for (int i = 0; i < announcements.length(); i++){
 
-                                    JSONObject jsonNotice = announcements.getJSONObject(i);
-                                    Notice noticeData = Notice.getNoticeData(jsonNotice);
+                                        JSONObject jsonNotice = announcements.getJSONObject(i);
+                                        Notice noticeData = Notice.getNoticeData(jsonNotice);
 
-                                    list.add(noticeData);
+                                        list.add(noticeData);
 
+                                    }
+
+                                    noticeAdapter.notifyDataSetChanged();
+
+
+                                }else {
+                                    String message = json.getString("message");
+                                    Toast.makeText(mContect, message, Toast.LENGTH_SHORT).show();
                                 }
 
-                                noticeAdapter.notifyDataSetChanged();
-
-
-                            }else {
-                                String message = json.getString("message");
-                                Toast.makeText(mContect, message, Toast.LENGTH_SHORT).show();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
+                    });
+                }
+            });
+        }else {
+            String userToken = getIntent().getStringExtra("token");
 
-                    }
-                });
-            }
-        });
+            ConnectServer.getRequestNotice(mContect, userToken, new ConnectServer.JsonHandler() {
+                @Override
+                public void onResponse(JSONObject json) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            try {
+                                int code = json.getInt("code");
+                                if (code == 200){
+
+                                    JSONObject data = json.getJSONObject("data");
+                                    JSONArray announcements = data.getJSONArray("announcements");
+
+                                    list.clear();
+
+                                    for (int i = 0; i < announcements.length(); i++){
+
+                                        JSONObject jsonNotice = announcements.getJSONObject(i);
+                                        Notice noticeData = Notice.getNoticeData(jsonNotice);
+
+                                        list.add(noticeData);
+
+                                    }
+
+                                    noticeAdapter.notifyDataSetChanged();
+
+
+                                }else {
+                                    String message = json.getString("message");
+                                    Toast.makeText(mContect, message, Toast.LENGTH_SHORT).show();
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    });
+                }
+            });
+        }
+
+
     }
 }

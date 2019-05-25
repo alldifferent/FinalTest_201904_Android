@@ -81,7 +81,7 @@
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:src="@mipmap/ic_launcher"
+                        android:src="@drawable/loginimg"
                         android:layout_gravity="right"
                         />
                 </FrameLayout>
@@ -109,7 +109,7 @@
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:src="@mipmap/ic_launcher"
+                        android:src="@drawable/passwordimg"
                         android:layout_gravity="right"
                         />
                 </FrameLayout>

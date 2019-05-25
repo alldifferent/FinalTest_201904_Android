@@ -7,18 +7,18 @@ public class ContentUtil {
 
     private static final String prefName= "UserLoginPref";
 
-    private static final String USER_TOKEN = "UserLoginPref";
+    private static final String USER_TOKEN = "UserToken";
 
     public static void setUserToken(Context context, String userToken){
 
-        SharedPreferences pref = context.getSharedPreferences(prefName, context.MODE_PRIVATE);
-        pref.edit().putString(USER_TOKEN, userToken);
+        SharedPreferences pref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE);
+        pref.edit().putString(USER_TOKEN, userToken).apply();
 
     }
 
     public static String getUserToken(Context context){
 
-        SharedPreferences pref = context.getSharedPreferences(prefName, context.MODE_PRIVATE);
+        SharedPreferences pref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE);
         return pref.getString(USER_TOKEN, "");
 
     }
